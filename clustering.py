@@ -1,41 +1,72 @@
+"""
+Clustering
+
+This file holds methods for several clustering algorthms.
+    - kmeans++
+    - Greedy Gonzales
+    - Single Link
+    - Complete Link
+
+"""
+
+__author__ = "Jon Wiggins"
+
 import random
 
 
-# Gets the center associated with the given metric, using the given distance function.
-def get_center(centers, metric, distance_function):
-    min_distance = distance_function(metric, centers[0])
-    min_center = centers[0]
+def get_center(data_points, metric, distance_function):
+    """
+    Given several points, this method return the approximate center
 
-    for center in centers[1:]:
-        distance = distance_function(metric, center)
-        if distance < min_distance:
-            min_distance = distance
-            min_center = center
+    :param data_points: a list of points
+    :param metric: a function that allows for the comparison of two points
+    :param distance_function: a function that allows for calculate the distance between two points
+    """
+    min_distance = distance_function(metric, data_points[0])
+    min_element = data_points[0]
 
-    return min_center
+    for element in data_points[1:]:
+        current_distance = distance_function(metric, element)
+        if current_distance < min_distance:
+            min_distance = current_distance
+            min_element = element
+
+    return min_element
 
 
-# Gets the distance to the center associated with the given metric, using the given distance function
 def distance_to_center(centers, metric, distance_function):
+    """
+    Helper function that returns the distance of the center of the given metric using the given distance function
+
+    :param centers: a list of centers
+    :param metric: a function that allows for the comparison of two points
+    :param distance_function: a function that allows for calculate the distance between two points
+    """
     return distance_function(metric, get_center(centers, metric, distance_function))
 
 
-def centers_to_sets(centers, metrics, distance_function):
-    sets = []
+def centers_to_groups(centers, metrics, distance_function):
+    """
+    TODO add
+    """
+    groups = []
 
     for center in centers:
-        subset = set()
+        new_group = set()
 
         for metric in metrics:
             if get_center(centers, metric, distance_function) == center:
-                subset.add(metric)
+                new_group.add(metric)
 
-        sets.append(subset)
+        groups.append(new_group)
 
-    return sets
+    return groups
 
 
 def k_means_pp(metrics, center_count, distance_function):
+    """
+    TODO add
+    """
     centers = [metrics[0]]
 
     while len(centers) < center_count:
@@ -56,10 +87,13 @@ def k_means_pp(metrics, center_count, distance_function):
                 centers.append(metrics[index])
                 break
 
-    return centers_to_sets(centers, metrics, distance_function)
+    return centers_to_groups(centers, metrics, distance_function)
 
 
 def gonzales(metrics, center_count, distance_function):
+    """
+    TODO add
+    """
     centers = list()
     centers.append(metrics[0])
     dict_clusters = {}
@@ -82,18 +116,27 @@ def gonzales(metrics, center_count, distance_function):
                 dict_clusters[metrics[comparison_index]] = centers[index]
 
     # return list of sets
-    return centers_to_sets(centers, metrics, distance_function)
+    return centers_to_groups(centers, metrics, distance_function)
 
 
 def single_link(metrics, center_count, point_distance_function):
+    """
+    TODO add
+    """
     return hierarchical_cluster(metrics, center_count, point_distance_function, single_link_distance)
 
 
 def complete_link(metrics, center_count, point_distance_function):
+    """
+    TODO add
+    """
     return hierarchical_cluster(metrics, center_count, point_distance_function, complete_link_distance)
 
 
 def hierarchical_cluster(metrics, desired_cluster_count, point_distance_function, set_distance_function):
+    """
+    TODO add
+    """    
     clusters = []
 
     for point in metrics:
@@ -118,6 +161,9 @@ def hierarchical_cluster(metrics, desired_cluster_count, point_distance_function
 
 
 def single_link_distance(set1, set2, distance_function):
+    """
+    TODO add
+    """
     shortest_distance = float("inf")
     for point1 in set1:
         for point2 in set2:
@@ -127,6 +173,9 @@ def single_link_distance(set1, set2, distance_function):
 
 
 def complete_link_distance(set1, set2, distance_function):
+    """
+    TODO add
+    """
     largest_distance = 0
     for point1 in set1:
         for point2 in set2:
@@ -136,11 +185,17 @@ def complete_link_distance(set1, set2, distance_function):
 
 
 def merge_clusters(cluster_data, index1, index2):
+    """
+    TODO add
+    """
     cluster_data[index1] = cluster_data[index1].union(cluster_data[index2])
     cluster_data.pop(index2)
 
 
 def get_max_distance(instructor, cluster, distanceFunction):
+    """
+    TODO add
+    """
     maxDistance = 0
 
     for otherInstructor in cluster:
@@ -153,6 +208,9 @@ def get_max_distance(instructor, cluster, distanceFunction):
 
 
 def get_representative(cluster, distance_function):
+    """
+    TODO add
+    """
     representative = None
     representative_distance = None
 
@@ -167,10 +225,13 @@ def get_representative(cluster, distance_function):
 
 
 def refine_clusters(clusters, instructors, distance_function):
+    """
+    TODO add
+    """
     new_centers = []
 
     for cluster in clusters:
         new_centers.append(get_representative(cluster, distance_function))
 
-    return centers_to_sets(new_centers, instructors, distance_function)
+    return centers_to_groups(new_centers, instructors, distance_function)
 

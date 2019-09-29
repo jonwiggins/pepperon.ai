@@ -1,5 +1,6 @@
 """"
-ngrams
+This file holds an NGram model, used for creating text courpuses and then using it to find word pattern probabilities
+
 """
 __author__ = "Jon Wiggins"
 
@@ -7,15 +8,23 @@ import math
 
 
 def format_text(text):
+    """
+    A helper method that 
+        - moves the text to lowercase
+        - returns a list of the lines of the text
+    
+    :param text: a text corpus
+    
+    :returns: a list
+    """
     text = text.lower()
-    to_return = []
-    for line in text.split("\n"):
-        to_return.append(line)
-    return to_return
+    return [line for line in text.split("\n")]
 
 
-class Model:
-
+class NGramModel:
+    """
+    TODO add
+    """
     def __init__(self, size=0):
         self.gram_size = size
         self.corpus = {}
@@ -24,10 +33,16 @@ class Model:
         self.add_k = 0
 
     def add_text(self, text):
+        """
+        TODO add
+        """
         for sentence in format_text(text):
             self.add_sentence(sentence)
 
     def add_sentence(self, sentence):
+        """
+        TODO add
+        """
         to_add = sentence.split()
         for index in range(len(to_add)):
             previous = ""
@@ -57,7 +72,11 @@ class Model:
                 else:
                     self.vocab[''] = 1
 
+
     def probe(self, word, before_word=""):
+        """
+        TODO add
+        """
         numerator = self.add_k
         denominator = (self.add_k * (len(self.vocab.keys()) - 1))
 
@@ -77,10 +96,18 @@ class Model:
 
         return math.log2(numerator / denominator)
 
+
     def smooth(self, add_k=1):
+        """
+        TODO add
+        """
         self.add_k = add_k
 
+
     def probe_sentence(self, sentence):
+        """
+        TODO add
+        """
         words = sentence.lower().split()
         to_return = None
         for index in range(len(words)):
