@@ -1,20 +1,46 @@
 # pepperon.ai
 
-pepperon.ai is an open-source machine-learning framework made primarily by _me_.
-This project seeks to implement various ML, NLP, and data mining algorithms as I learn what they are and how they work.
-I imagine it being like scikit-learn, but significantly worse, in terms performance, usability, reliability and scope. 
-But that's okay, because making it will be fun.
+pepperon.ai is an open-source Python toolset for machine learning and data science and distributed under the Please-Don't-Sue-Me Lisence.
 
-## Clusterings
-- Kmeans++
-- Greedy Gonzales
-- Complete Link
-- Mean Link
-- Single Link
+This project was started in 2019 by _me_ as a central repository for all of the algorithms I have learned in various classes at the University of Utah. 
 
-## Decision Trees
-- ID3
 
-## ngrams
-- ngrams with add_k smoothing
+I envision it being a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone but me. But that's okay, because making it will be fun.
 
+## Installation
+
+### Requirements
+pepperon.ai requires:
+- Python (>= 3.5)
+- NumPy (>= 1.11.0)
+- A love for data
+- Scipy (>= 0.11)
+- Pandas (>= 0.24)
+
+### User Installation
+There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your repo.
+
+
+## Files
+
+### Clusterings
+- kmeans++ ; for all you unlabeled data needs
+
+### Decision Trees
+- ID3 ; for all your decison needs
+
+### Perceptron
+- Simple Perceptron ; for all your needs that are both linearly seperable and basic
+- Average Perceptron ; for all your needs that are both linearly seperable and noisy
+
+### ngrams
+- ngrams ; for all your simplistic corpus needs 
+
+## Usage Examples
+Maybe one day I will make some files that show off how to go about using these systems
+
+## To do
+- Add examples usage files
+- Add kgrams
+- Add streaming algorithms Misa Greis and Count Min Sketch
+- Add clustering algorithms gonzales, lloyds, mean link, single link, and complete link
