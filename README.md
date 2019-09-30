@@ -16,17 +16,17 @@ pepperon.ai is currently on version 0.123.4.0
 pepperon.ai requires:
 - Python (>= 3.5)
 - NumPy (>= 1.11.0)
-- A love for data
+- A lot of Patience
 - Scipy (>= 0.11)
 - Pandas (>= 0.24)
 
 ### User Installation
-There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your repo.
+There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your project.
 
 
 ## Files
 
-### Clusterings
+### Cluster
 - kmeans++ ; for all you unlabeled data needs
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
@@ -34,7 +34,7 @@ There's no 'pip' or 'conda' install, just yoink the file you want from this repo
 ### Decision Trees
 - ID3 ; for all your decison needs
 
-### ngrams
+### n-grams
 - ngrams ; for all your simplistic corpus needs 
 - kgrams ; for all your shingling needs
 
