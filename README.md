@@ -1,11 +1,11 @@
 # pepperon.ai
 
-pepperon.ai is an open-source Python toolset for machine learning and data science and distributed under the Please-Don't-_Su_-Me Lisence.
+pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the Please-Don't-_Su_-Me License.
 
-This project was started in 2019 by _me_ as a central repository for all of the algorithms I have learned in various classes at the University of Utah. 
+This project was started in 2019 by @JonWiggins as a central repository for some of the fun algorithms from various courses at the University of Utah. 
 
 
-I envision it being a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone but me. But that's okay, because making it will be fun.
+It is intended to be a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone. But that's okay, because making it will be fun.
 
 ## Version
 pepperon.ai is currently on version 0.123.4.0
@@ -47,7 +47,6 @@ Maybe one day I will make some files that show off how to go about using these s
 
 ## To do
 - Add examples usage files
-- Add kgrams
 - Add streaming algorithms Misa Greis and Count Min Sketch
 - Add clustering algorithms gonzales, lloyds, mean link, single link, and complete link
 
