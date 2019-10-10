@@ -1,6 +1,6 @@
 # pepperon.ai
 
-pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the Please-Don't-_Su_-Me License.
+pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the Please-Don't-Sue-Me License.
 
 This project was started in 2019 by @JonWiggins as a central repository for some of the fun algorithms from various courses at the University of Utah. 
 
@@ -41,6 +41,10 @@ There's no 'pip' or 'conda' install, just yoink the file you want from this repo
 ### Perceptron
 - Simple Perceptron ; for all your needs that are both linearly seperable and basic
 - Average Perceptron ; for all your needs that are both linearly seperable and noisy
+
+### Data Set Utils
+- *In progress, do not attempt to use*
+- Will contain grid search, jackknifing, and model evaluation tools
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems
