@@ -1,4 +1,4 @@
-# pepperon.ai
+# [pepperon.ai](pepperon.ai)
 
 pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the MIT License.
 
@@ -7,8 +7,10 @@ This project was started in 2019 by @JonWiggins as a central repository for some
 
 It is intended to be a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone. But that's okay, because making it will be fun.
 
+pepperon.ai is also developed entirely in python3, _which is the future_.
+
 ## Version
-pepperon.ai is currently on version 0.123.4.0
+pepperon.ai is currently on version 0.124
 
 ## Installation
 
@@ -24,27 +26,37 @@ pepperon.ai requires:
 There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your project.
 
 
-## Files
+# Modules
 
-### Cluster
+## Cluster
+### kmeans++
 - kmeans++ ; for all you unlabeled data needs
+### Gonzales
+- Gonzales
+### Utils
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
 
+## Models
 ### Decision Trees
-- ID3 ; for all your decison needs
-
-### n-grams
-- ngrams ; for all your simplistic corpus needs 
-- kgrams ; for all your shingling needs
-
+- Decision Trees created with ID3 ; for all your decison needs
 ### Perceptron
 - Simple Perceptron ; for all your needs that are both linearly seperable and basic
 - Average Perceptron ; for all your needs that are both linearly seperable and noisy
 
-### Data Set Utils
+## Language
+### Ngrams
+- ngrams ; for all your simplistic corpus needs 
+## Kgrams
+- kgrams ; for all your shingling needs
+
+## Data
 - *In progress, do not attempt to use*
 - Will contain grid search, jackknifing, and model evaluation tools
+### Misa Gries
+- Misa Gries
+### Count Min Sketch
+- Count Min Sketch
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems
@@ -53,4 +65,7 @@ Maybe one day I will make some files that show off how to go about using these s
 - Add examples usage files
 - Add streaming algorithms Misa Greis and Count Min Sketch
 - Add clustering algorithms gonzales, lloyds, mean link, single link, and complete link
+
+# Contact
+Feel free to send all comments, questions, or concerns to [contact@pepperon.ai](mailto:pepperon.ai)
 
