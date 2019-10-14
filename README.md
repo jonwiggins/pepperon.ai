@@ -1,4 +1,4 @@
-# [pepperon.ai](pepperon.ai)
+# [pepperon.ai](https://pepperon.ai)
 
 pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the MIT License.
 
