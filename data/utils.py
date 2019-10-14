@@ -95,21 +95,54 @@ def test_model_error(model, probe_method, test_set, test_answer):
     return 1 - test_model_accuracy(model, probe_method, test_set, test_answer)
 
 
-def get_average_accuracy(model, probe_method, data_set, target_label, fold_count):
-    # get average accuracy against all the folds
-
-    pass
+def get_average_accuracy_and_sd(model, probe_method, folds):
+    # TODO generalize this for all different models
+    accs = []
+    for test_fold in folds:
+        if test_fold == folds[0]:
+            train_set = folds[1]
+        else:
+            train_set = folds[0]
+        for element in folds:
+            if element == test_fold:
+                continue
+            train_set = train_set.append(element)
+        # TODO generalize
+        accs.append(
+            test_model_accuracy(
+                model, probe_method, test_set=test_fold, test_answer=test_fold
+            )
+        )
+    return np.mean(accs, axis=0), np.std(accs, axis=0)
 
 
 def grid_search(
-    model_type, probe_method, parameter_to_options, data_set, data_answers, fold_count
+    model_type,
+    probe_method,
+    parameter_to_options,
+    train_set,
+    train_answers,
+    test_set,
+    test_answers,
+    fold_count,
+    print_results,
 ):
-    # grid search for best hyper parameters
+    # TODO generalize this for all different models
     best_params = None
     best_model = None
+    best_acc = None
     for parameter_set in enumerate_hyperparameter_combinations(parameter_to_options):
-        current_model = model_type()
-        # todo train and test on cross validation
+        current_model = model_type(parameter_set)
+        current_model.train(train_set, train_answers)
+        acc, sd = get_average_accuracy_and_sd(current_model, probe_method, fold_count)
+        if print_results:
+            print(type(model_type))
+            print("Parameters:", parameter_set)
+            print("Average Accuracy:", acc)
+        if not best_acc or best_acc < acc:
+            best_model = current_model
+            best_params = parameter_set
+            best_acc = acc
 
-    return best_model, best_params
+    return best_model, best_params, best_acc
 
