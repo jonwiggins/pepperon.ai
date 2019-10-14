@@ -25,38 +25,36 @@ pepperon.ai requires:
 ### User Installation
 There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your project.
 
-
 # Modules
-
-## Cluster
-### kmeans++
-- kmeans++ ; for all you unlabeled data needs
-### Gonzales
-- Gonzales
-### Utils
-- Fowlkes-Mallows Index ; for comparing clusterings;
-- Purity Index ; for comparing clusterings
-
 ## Models
 ### Decision Trees
 - Decision Trees created with ID3 ; for all your decison needs
 ### Perceptron
 - Simple Perceptron ; for all your needs that are both linearly seperable and basic
 - Average Perceptron ; for all your needs that are both linearly seperable and noisy
-
 ## Language
 ### Ngrams
 - ngrams ; for all your simplistic corpus needs 
-## Kgrams
+### Kgrams
 - kgrams ; for all your shingling needs
-
 ## Data
-- *In progress, do not attempt to use*
-- Will contain grid search, jackknifing, and model evaluation tools
 ### Misa Gries
-- Misa Gries
+- For creating a heavy hitters lower bound
 ### Count Min Sketch
-- Count Min Sketch
+- For creating a heavy hitters upper bound
+### Utils
+- *In progress, do not attempt to use*
+- Grid Search for finding the best hyperparameters for your model
+- Jackknifing to create cross validation folds
+- General testing and evaluating methods
+## Cluster
+### kmeans++
+- Coming Soon: Unlabeled clustering method
+### Gonzales
+- Coming Soon: Unlabeled clustering method
+### Utils
+- Fowlkes-Mallows Index ; for comparing clusterings;
+- Purity Index ; for comparing clusterings
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems
