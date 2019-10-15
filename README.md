@@ -49,9 +49,9 @@ There's no 'pip' or 'conda' install, just yoink the file you want from this repo
 - General testing and evaluating methods
 ## Cluster
 ### kmeans++
-- Coming Soon: Unlabeled clustering method
+- Clusters based on the kmeans++ algorithm, all based on probability
 ### Gonzales
-- Coming Soon: Unlabeled clustering method
+- Clusters based on the Greedy Golzales algorithm
 ### Utils
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
