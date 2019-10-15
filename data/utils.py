@@ -13,6 +13,7 @@ import math
 import numpy as np
 import pandas as pd
 import itertools
+import random
 
 
 def jackknife(data, fold_count, unify_train, save, save_dir):
@@ -48,6 +49,32 @@ def jackknife(data, fold_count, unify_train, save, save_dir):
         train_fold.to_csv(save_dir + "train.csv")
         test_fold.to_csv(save_dir + "test.csv")
     return train_fold, test_fold
+
+
+def random_unit_vector(dimensions, seed=None):
+    """
+    Returns a random unit vector in the given number of dimensions
+    Created using Gausian Random vars
+
+    :param dimensions: desired dimensions
+    :param seed: nullable, random var see
+
+    :return: random unit vecotor
+    """
+    raw = []
+    magnitude = 0
+    if seed:
+        random.seed(seed)
+        
+    for count in range(dimensions):
+        uniform1 = random.uniform(0, 1)
+        uniform2 = random.uniform(0, 1)
+        toadd = math.sqrt(-2 * math.log(uniform1)) * math.cos(2 * math.pi * uniform2)
+        magnitude += (toadd ** 2)
+        raw.append(toadd)
+    
+    magnitude = math.sqrt(magnitude)
+    return [element / magnitude for element in raw]
 
 
 def test_model_accuracy(model, probe_method, test_set, test_answer):
