@@ -1,7 +1,7 @@
 """
-One day I will implement these clustering algorthms
-Here are some cleaned helper methods
-Until then, feel free to call these methods just for fun!
+Holds several static methods used for clustering unlabeled data
+Also holds comparison methods for datpoints and clusterings
+
 """
 
 __author__ = "Jon Wiggins"
@@ -228,7 +228,7 @@ def kmeans_pp(points, center_count, distance_function=euclidian_distance):
 def gonzales(points, center_count, distance_function=euclidian_distance):
     """
     Clusters the given points based on the Greedy Gonzales algorithmn
-    
+
     :param points: all of the datapoints to cluster
     :param center_count: the number of clusters to produce
     :param distance_function: a function that will compare two datapoints
