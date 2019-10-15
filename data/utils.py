@@ -84,6 +84,11 @@ def test_model_error(model, probe_method, test_set, test_answer):
 
 
 def get_average_accuracy_and_sd(model, probe_method, folds):
+    """
+    *incomplete*
+    
+    Tests the given model on each fold
+    """
     # TODO generalize this for all different models
     accs = []
     for test_fold in folds:
@@ -95,7 +100,7 @@ def get_average_accuracy_and_sd(model, probe_method, folds):
             if element == test_fold:
                 continue
             train_set = train_set.append(element)
-        # TODO generalize
+        # TODO generalize and train here
         accs.append(
             test_model_accuracy(
                 model, probe_method, test_set=test_fold, test_answer=test_fold
@@ -128,6 +133,8 @@ def grid_search(
     print_results,
 ):
     """
+    *incomplete*
+    
     Trains a model with every possible set of given hyperparameters and returns the best performing one
 
     :param model_type: a class of model to train
@@ -150,6 +157,7 @@ def grid_search(
     for parameter_set in enumerate_hyperparameter_combinations(parameter_to_options):
         # TODO generalize this for all different models
         current_model = model_type(**parameter_set)
+        # TODO possibly move where training takes place
         current_model.train(train_set, train_answers)
         acc, sd = get_average_accuracy_and_sd(current_model, probe_method, fold_count)
         if print_results:
