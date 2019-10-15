@@ -50,18 +50,6 @@ def jackknife(data, fold_count, unify_train, save, save_dir):
     return train_fold, test_fold
 
 
-def enumerate_hyperparameter_combinations(parameter_to_options):
-    """
-    Returns a list of dictionaries of all hyperparameter options
-
-    :param parameter_to_options: a dictionary that maps parameter name to a list of possible values
-
-    :return: a list of dictionaries that map parameter names to set values
-    """
-    keys, values = zip(*parameter_to_options.items())
-    return [dict(zip(keys, v)) for v in itertools.product(*values)]
-
-
 def test_model_accuracy(model, probe_method, test_set, test_answer):
     """
     Tests the model on the given set and returns the accuracy
@@ -116,6 +104,18 @@ def get_average_accuracy_and_sd(model, probe_method, folds):
     return np.mean(accs, axis=0), np.std(accs, axis=0)
 
 
+def enumerate_hyperparameter_combinations(parameter_to_options):
+    """
+    Returns a list of dictionaries of all hyperparameter options
+
+    :param parameter_to_options: a dictionary that maps parameter name to a list of possible values
+
+    :return: a list of dictionaries that map parameter names to set values
+    """
+    keys, values = zip(*parameter_to_options.items())
+    return [dict(zip(keys, v)) for v in itertools.product(*values)]
+
+
 def grid_search(
     model_type,
     probe_method,
@@ -127,22 +127,41 @@ def grid_search(
     fold_count,
     print_results,
 ):
-    # TODO generalize this for all different models
+    """
+    Trains a model with every possible set of given hyperparameters and returns the best performing one
+
+    :param model_type: a class of model to train
+    :param probe_method: the method in model_type to probe after training
+    :param parameter_to_options: a dictionary that maps each hyperparamer to a list of possible values
+    :param train_set: a set of training input
+    :param train_answers: a set of trianing set answers to correlate with train_set
+    :param test_set: a set of testing input
+    :param test_answers: a set of testing answers to correlate with test_answers
+    :param fold_count: the number of jackknife folds to evaluate with
+    :param print_results: prints the accuracy and standard deviation of each experiment if true
+    
+    :return: the model and info as; (the model, the hyperparameter dict, the average accuracy, the standard deviation)
+    """
+
     best_params = None
     best_model = None
     best_acc = None
+    best_std = None
     for parameter_set in enumerate_hyperparameter_combinations(parameter_to_options):
-        current_model = model_type(parameter_set)
+        # TODO generalize this for all different models
+        current_model = model_type(**parameter_set)
         current_model.train(train_set, train_answers)
         acc, sd = get_average_accuracy_and_sd(current_model, probe_method, fold_count)
         if print_results:
             print(type(model_type))
             print("Parameters:", parameter_set)
             print("Average Accuracy:", acc)
+            print("Average Standard Deviation:", sd)
         if not best_acc or best_acc < acc:
             best_model = current_model
             best_params = parameter_set
             best_acc = acc
+            best_std = sd
 
-    return best_model, best_params, best_acc
+    return best_model, best_params, best_acc, best_std
 
