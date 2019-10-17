@@ -15,39 +15,30 @@ import pandas as pd
 import itertools
 
 
-def jackknife(data, fold_count, unify_train, save, save_dir):
+def jackknife(data, fold_count, save, save_dir, experiment_id=""):
     """
-    Jackknifes the given dataframe into training and testing sets
-    Can be saved to a directory and the training sets can be unified to seperate
+    Jackknifes the given dataframe into fold_count number of dataframes
+    
+    Randomly shuffles the dataframe before splitting
+    Will also save the folds to a given directory
 
     :param data: a dataframe source
     :param fold_count: the number of folds to create
-    :param unify_train: if true, returns 1 training dataframe holding all folds, else returns a list of dataframes
     :param save: if true, saves the folds to the given directory
     :param save_dir: a directory as a string on where to save the folds as a csv
+    :param experiment_id: an identifier to use when saving the folds to idenfity them later
 
-    :return: training folds, one dataframe if unified, a list of dataframes if not
-    :return: a testing fold as a dataframe
+    :return: a list of dataframes
     """
+    data = data.sample(frac=1)
     folds = np.array_split(data, fold_count)
     np.random.shuffle(folds)
-    test_fold = folds[0]
-
-    if not unify_train:
-        if save:
-            for count, fold in enumerate(folds[1:]):
-                fold.to_csv(save_dir + "train" + str(count) + ".csv")
-            test_fold.to_csv(save_dir + "test.csv")
-        return folds[1:], test_fold
-
-    train_fold = folds[1]
-    for fold in folds[2:]:
-        train_fold = train_fold.append(fold)
 
     if save:
-        train_fold.to_csv(save_dir + "train.csv")
-        test_fold.to_csv(save_dir + "test.csv")
-    return train_fold, test_fold
+        for count, fold in enumerate(folds):
+            fold.to_csv(save_dir + "fold" + str(count) + "_" + experiment_id + ".csv")
+
+    return folds
 
 
 def test_model_accuracy(model, probe_method, test_set, test_answer):
