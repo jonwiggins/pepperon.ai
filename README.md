@@ -49,9 +49,14 @@ There's no 'pip' or 'conda' install, just yoink the file you want from this repo
 - General testing and evaluating methods
 ## Cluster
 ### kmeans++
-- Clusters based on the kmeans++ algorithm, all based on probability
+Clusters based on the kmeans++ algorithm, all based on probability
 ### Gonzales
-- Clusters based on the Greedy Golzales algorithm
+Clusters based on the Greedy Golzales algorithm, iteratively picks the furthest point from the existing clusters to be a new center.
+### Heirarchical Clustering
+Rather than basing off of clusters, Heirarchial methods iteratively merge the two nearest clusters. What defines *near* is based on the linking method given, the built in linking functions provided are:
+- Single link: finds the smallest distance between two points in clusters
+- Complete link: find the largest distance between two points in clusters
+- Mean link: finds the average distance between two points in clusters
 ### Utils
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
@@ -61,8 +66,6 @@ Maybe one day I will make some files that show off how to go about using these s
 
 ## To do
 - Add examples usage files
-- Add streaming algorithms Misa Greis and Count Min Sketch
-- Add clustering algorithms gonzales, lloyds, mean link, single link, and complete link
 
 # Contact
 Feel free to send all comments, questions, or concerns to [contact@pepperon.ai](mailto:pepperon.ai)

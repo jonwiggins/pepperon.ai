@@ -263,13 +263,97 @@ def gonzales(points, center_count, distance_function=euclidian_distance):
     return to_return
 
 
-def single_link():
-    pass
+def heirarchial_cluster(
+    points, center_count, distance_function=euclidian_distance, link=mean_link
+):
+    """
+    Clusters the given points based on heirarchial clustering: the distance between two clusters is calculated using the given link function
+
+    :param points: all of the datapoints to cluster
+    :param center_count: the number of clusters to produce
+    :param distance_function: a function that will compare two datapoints
+    :param link: function that defines how two clusters will be compared, this library includes single_link, complete_link, and mean_link
+
+    :return: a dictionary that maps centers to the points in its cluster
+    """
+    clusters = [set(point) for point in points]
+
+    while center_count < len(clusters):
+        first_neighbor_index = None
+        second_neighbor_index = None
+        min_neighbor_distance = None
+
+        for neighbor1 in range(len(clusters)):
+            for neighbor2 in range(neighbor1 + 1, len(clusters)):
+                current_distance = link(
+                    clusters[neighbor1], clusters[neighbor2], distance_function
+                )
+
+                if not min_neighbor_distance or current_distance < current_distance:
+                    first_neighbor_index = neighbor1
+                    second_neighbor_index = neighbor2
+                    min_neighbor_distance = current_distance
+
+        clusters[first_neighbor_index] = clusters[first_neighbor_index].union(
+            clusters[second_neighbor_index]
+        )
+        del clusters[second_neighbor_index]
+
+    return clusters
 
 
-def mean_link():
-    pass
+def single_link(first_clustering, second_clustering, distance_function):
+    """
+    Finds the smallest distance between any two points in the two given clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the smallest distance between a pair of points in the two clusters
+    """
+    min_neighbor_distance = None
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            current_distance = distance_function(first_neighbor, second_neighbor)
+            if not min_neighbor_distance or min_neighbor_distance > current_distance:
+                min_neighbor_distance = current_distance
+    return min_neighbor_distance
 
 
-def complete_link():
-    pass
+def mean_link(first_clustering, second_clustering, distance_function):
+    """
+    Finds the average distance between each pair of points in the two clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the average distance between each pair of points in the two clusters
+    """
+    total_distance = 0.0
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            total_distance += distance_function(first_neighbor, second_neighbor)
+
+    return total_distance / (len(first_clustering) * len(second_clustering))
+
+
+def complete_link(first_clustering, second_clustering, distance_function):
+    """
+    Finds the largest distance between any two points in the two given clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the largest distance between a pair of points in the two clusters
+    """
+    max_neighbor_distance = None
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            current_distance = distance_function(first_neighbor, second_neighbor)
+            if not max_neighbor_distance or max_neighbor_distance < current_distance:
+                max_neighbor_distance = current_distance
+    return max_neighbor_distance
+
