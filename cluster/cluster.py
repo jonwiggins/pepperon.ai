@@ -22,9 +22,23 @@ def euclidian_distance(first, second):
     """
     if len(first) != len(second):
         raise Exception("These vectors must be the same size")
-    return math.sqrt(
-        sum([pow(first[index] - second[index], 2) for index in range(len(first))])
-    )
+    return math.sqrt(sum([pow(x - y, 2) for x, y in zip(first, second)]))
+
+
+def manhatten_distance(first, second):
+    """
+    Given two vectors, returns the manhatten distance between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+
+    :return: the distance as a double
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+
+    return sum([abs(x - y) for x, y in zip(first, second)])
 
 
 def jaccard_similarity(first, second):
