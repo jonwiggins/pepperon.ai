@@ -41,6 +41,25 @@ def manhatten_distance(first, second):
     return sum([abs(x - y) for x, y in zip(first, second)])
 
 
+def cosine_similarity(first, second):
+    """
+    Given two vectors, returns the cosine similarity between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+
+    :return: the similarity as a double
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+    numerator = sum(x * y for x, y in zip(first, second))
+    denominator = math.sqrt(sum(pow(x, 2) for x in first)) * math.sqrt(sum(pow(y, 2) for y in second))
+    if denominator == 0:
+        return 0
+    return numerator / denominator
+
+    
 def jaccard_similarity(first, second):
     """
     Given two sets, returns the jaccard similarity between them

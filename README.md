@@ -60,6 +60,7 @@ Rather than basing off of clusters, Heirarchial methods iteratively merge the tw
 ### Utils
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
+- Various distance and similarity functions
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems
