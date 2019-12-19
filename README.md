@@ -4,7 +4,6 @@ pepperon.ai is an open-source Python toolset for machine learning and data scien
 
 This project was started in 2019 by @JonWiggins as a central repository for some of the fun algorithms from various courses at the University of Utah. 
 
-
 It is intended to be a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone. But that's okay, because making it will be fun.
 
 ## Motivation
