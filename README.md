@@ -1,6 +1,6 @@
 # [pepperon.ai](https://pepperon.ai)
 
-pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the MIT License.
+pepperon.ai is an open-source Python toolset for machine learning and data science and is distributed under the MIT License (Please don't sue me).
 
 This project was started in 2019 by @JonWiggins as a central repository for some of the fun algorithms from various courses at the University of Utah. 
 
@@ -27,7 +27,7 @@ pepperon.ai requires:
 - Pandas (>= 0.24)
 
 ### User Installation
-There's no 'pip' or 'conda' install, just yoink the file you want from this repo and paste it into your project.
+There is no `pip` or `conda` install, just yoink the file you want from this repo and paste it into your project.
 
 # Modules
 ## Models
