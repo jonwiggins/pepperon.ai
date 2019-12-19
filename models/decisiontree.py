@@ -24,9 +24,9 @@ def entropy(data, target_label):
     :returns: double, the entrophy
     """
     to_return = 0
-    for value in data[target_label].unique():
-        value_prob = (data[data[target_label] == value].shape[0]) / data.shape[0]
-        to_return += value_prob * math.log2(value_prob)
+    value_probs = [count / data.shape[0] for count in data[target_label].value_counts()]
+    to_return += sum(value_prob * math.log2(value_prob) for value_prob in value_probs)
+
     return to_return * -1
 
 
@@ -68,7 +68,40 @@ def information_gain(data, target_label, attribute, impurity_metric=entropy):
     return to_return
 
 
-def ID3(examples, target_label, metric=information_gain, depth_budget=None):
+def fast_information_gain_on_entropy(data, target_label, attribute):
+    """
+    Calculates the information gain of the given attribute with respect to the target_label in the given dataframe
+    Does this a bit quicker than the above method as it only uses entropy
+
+    :param data: A dataframe of examples
+    :param target_label: A name of a column in the dataframe 
+    :param attribute:  A name of a column in the dataframe 
+
+    :returns: double, the information gain of the attribute
+    """
+    to_return = 0
+    value_probs = [count / data.shape[0] for count in data[target_label].value_counts()]
+    to_return += sum(value_prob * math.log2(value_prob) for value_prob in value_probs)
+    to_return *= -1
+
+    counts = data[attribute].value_counts()
+    for index, count in zip(counts.index, counts):
+        value_probs = [
+            subset_count / data.shape[0]
+            for subset_count in data[data[attribute] == index][
+                target_label
+            ].value_counts()
+        ]
+        to_return -= sum(
+            value_prob * math.log2(value_prob) for value_prob in value_probs
+        )
+
+    return to_return
+
+
+def ID3(
+    examples, target_label, metric=fast_information_gain_on_entropy, depth_budget=None
+):
     """
     This function implements the ID3 algorithm
     It will return a DecisionTree constructed for the target_label using the givne dataframe of examples
@@ -99,7 +132,8 @@ def ID3(examples, target_label, metric=information_gain, depth_budget=None):
         if element == target_label:
             continue
 
-        next_metric = metric(examples, target_label, element, entropy)
+        # next_metric = metric(examples, target_label, element, entropy)
+        next_metric = metric(examples, target_label, element)
         if attribute is None or next_metric > max_metric:
             max_metric = next_metric
             attribute = element
