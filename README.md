@@ -7,7 +7,12 @@ This project was started in 2019 by @JonWiggins as a central repository for some
 
 It is intended to be a lot like scikit-learn, except more buggy, with less functionality, worse documentation, and not used by anyone. But that's okay, because making it will be fun.
 
-pepperon.ai is also developed entirely in python3, _which is the future_.
+## Motivation
+pepperon.ai is built on a few core ideas:
+
+1. Machine Learning should be accessable to the masses
+2. Bugs should be more common in software packages
+2. Cython is for posers, python3 is the future
 
 ## Version
 pepperon.ai is currently on version 0.124
