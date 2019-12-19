@@ -32,6 +32,12 @@ There's no 'pip' or 'conda' install, just yoink the file you want from this repo
 ### Perceptron
 - Simple Perceptron ; for all your needs that are both linearly seperable and basic
 - Average Perceptron ; for all your needs that are both linearly seperable and noisy
+### SVM
+- SVM on SGD ; for when you are using Perceptron, and decide you want it to be better
+### Niave Bayes
+- Guassian and Bernoulli
+### Random Forest
+- Random Forest on ID3
 ## Language
 ### Ngrams
 - ngrams ; for all your simplistic corpus needs 
