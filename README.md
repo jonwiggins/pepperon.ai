@@ -11,7 +11,8 @@ pepperon.ai is built on a few core ideas:
 
 1. Machine Learning should be accessable to the masses
 2. Bugs should be more common in software packages
-2. Cython is for posers, python3 is the future
+3. Cython is for posers, python3 is the future
+4. Runtime, much like digging holes, build character
 
 ## Version
 pepperon.ai is currently on version 0.124
