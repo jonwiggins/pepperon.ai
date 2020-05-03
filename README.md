@@ -61,7 +61,7 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 ### kmeans++
 Clusters based on the kmeans++ algorithm, all based on probability
 ### Gonzales
-Clusters based on the Greedy Golzales algorithm, iteratively picks the furthest point from the existing clusters to be a new center.
+Clusters based on the Greedy Gonlzales algorithm, iteratively picks the furthest point from the existing clusters to be a new center.
 ### Heirarchical Clustering
 Rather than basing off of clusters, Heirarchial methods iteratively merge the two nearest clusters. What defines *near* is based on the linking method given, the built in linking functions provided are:
 - Single link: finds the smallest distance between two points in clusters
