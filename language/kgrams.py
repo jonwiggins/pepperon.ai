@@ -5,7 +5,7 @@ This file holds a static method for creating kgrams
 __author__ = "Jon Wiggins"
 
 
-def kgrams(text, size=2, case_sensitive=False):
+def kgrams(text: str, size: int = 2, case_sensitive: bool = False) -> "Set[":
     """
     Returns a list of kgrams of the given size from the given text
     
@@ -19,6 +19,5 @@ def kgrams(text, size=2, case_sensitive=False):
         text = text.lower()
 
     words = [word for word in text.split(" ") if word != ""]
-
-    kgrams = zip(*[words[:i] for i in range(size)])
+    kgrams = zip(*[iter(words)] * size)
     return set(" ".join(kgram) for kgram in kgrams)

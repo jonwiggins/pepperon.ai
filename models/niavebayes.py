@@ -8,9 +8,13 @@ import numpy as np
 import math
 import collections
 
+from model import *
 
-class NiaveBayes:
-    def bernoulli_probability(self, attribute, subset_with_label, example):
+
+class NiaveBayes(Model):
+    def bernoulli_probability(
+        self, attribute: str, subset_with_label: "dataframe", example: "dataframe"
+    ) -> float:
         """
         Uses the bernoulli formula to calculate the probabilty of seeing the attribute in the 
         subset with the value it has in example
@@ -32,7 +36,9 @@ class NiaveBayes:
             + self.unique_counts[attribute]
         )
 
-    def gaussian_probability(self, attribute, label, example):
+    def gaussian_probability(
+        self, attribute: str, label: str, example: "dataframe"
+    ) -> float:
         """
         Approximates a gaussian distribution to calculate the probability the the attribute appearing with label in example
         """
@@ -47,7 +53,7 @@ class NiaveBayes:
         outer_denominator = np.sqrt(
             2 * np.pi * self.variances[label][attribute]
         ) * np.exp(
-            (-(example[attribute] - self.means[label][attribute]) ** 2)
+            (-((example[attribute] - self.means[label][attribute]) ** 2))
             / (2 * inner_denominator)
         )
         if outer_denominator == 0.0:
@@ -61,10 +67,10 @@ class NiaveBayes:
 
     def train(
         self,
-        dataframe,
-        target_label="target",
-        smoothing_term=1,
-        continuous_classes=True,
+        dataframe: "dataframe",
+        target_label: str = "target",
+        smoothing_term: float = 1,
+        continuous_classes: bool = True,
     ):
         """
         Builds NB model from the given data frame
@@ -105,7 +111,7 @@ class NiaveBayes:
                     ].var()
                     self.means[label][attribute] = subset_with_label[attribute].mean()
 
-    def probe(self, example):
+    def probe(self, example: "dataframe") -> str:
         """
         Probes the model with the given example
         

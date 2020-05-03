@@ -7,7 +7,7 @@ __author__ = "Jon Wiggins"
 import math
 
 
-def format_text(text):
+def format_text(text: str) -> str:
     """
     A helper method that 
         - moves the text to lowercase
@@ -29,7 +29,7 @@ class NGram:
     And a peie of sample text can be probed with it to predict the text's probability based on the given corpus
     """
 
-    def __init__(self, size=0):
+    def __init__(self, size: int = 0):
         """
         Create a new model
         :param size: the ngram size, defaults to 0 for unigram, 1 for bigram, etc.
@@ -40,7 +40,7 @@ class NGram:
         self.vocab = {}
         self.add_k = 0
 
-    def add_text(self, text):
+    def add_text(self, text: str):
         """
         Adds the given text to the model
 
@@ -53,7 +53,7 @@ class NGram:
         for sentence in format_text(text):
             self.add_sentence(sentence)
 
-    def add_sentence(self, sentence):
+    def add_sentence(self, sentence: str):
         """
         This helper function adds the given sentence to the model
         :param sentence: a single line string
@@ -87,7 +87,7 @@ class NGram:
                 else:
                     self.vocab[""] = 1
 
-    def probe(self, word, before_word=""):
+    def probe(self, word: str, before_word: str = "") -> float:
         """
         Returns the logprob of a sequence from the model
         
@@ -118,7 +118,7 @@ class NGram:
 
         return math.log2(numerator / denominator)
 
-    def smooth(self, add_k=1):
+    def smooth(self, add_k: int = 1):
         """
         Smooths the model by the given number
         
@@ -126,7 +126,7 @@ class NGram:
         """
         self.add_k = add_k
 
-    def probe_sentence(self, sentence, accuracy=4):
+    def probe_sentence(self, sentence: str, accuracy: int = 4) -> float:
         """
         Given a single sentence, returns the model's predicted probability as a logprob
 
@@ -155,4 +155,3 @@ class NGram:
                 to_return += result
 
         return round(to_return, accuracy)
-

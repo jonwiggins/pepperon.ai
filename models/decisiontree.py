@@ -13,15 +13,17 @@ __author__ = "Jon Wiggins"
 
 import math
 
+from model import *
 
-def entropy(data, target_label):
+
+def entropy(data: "dataframe", target_label: str) -> float:
     """
     Calculates the entroy of the given dataframe with respect to the column given by the target_label
 
     :param data: A dataframe of examples
     :param target_label: A name of a column in the dataframe 
 
-    :returns: double, the entrophy
+    :returns: the entrophy
     """
     to_return = 0
     value_probs = [count / data.shape[0] for count in data[target_label].value_counts()]
@@ -30,14 +32,14 @@ def entropy(data, target_label):
     return to_return * -1
 
 
-def gini_index(data, target_label):
+def gini_index(data: "dataframe", target_label: str) -> float:
     """
     Calculates the gini index of the given dataframe with respect to the column given by the target_label
 
     :param data: A dataframe of examples
     :param target_label: A name of a column in the dataframe 
 
-    :returns: double, the gini index
+    :returns: the gini index
     """
     to_return = 1
 
@@ -48,7 +50,9 @@ def gini_index(data, target_label):
     return to_return
 
 
-def information_gain(data, target_label, attribute, impurity_metric=entropy):
+def information_gain(
+    data: "dataframe", target_label: str, attribute: str, impurity_metric: str = entropy
+) -> float:
     """
     Calculates the information gain of the given attribute with respect to the target_label in the given dataframe
 
@@ -57,7 +61,7 @@ def information_gain(data, target_label, attribute, impurity_metric=entropy):
     :param attribute:  A name of a column in the dataframe 
     :param impurity_metric: A function for calculating impurity, defaults to entropy
 
-    :returns: double, the information gain of the attribute
+    :returns: the information gain of the attribute
     """
     to_return = impurity_metric(data, target_label)
 
@@ -68,7 +72,9 @@ def information_gain(data, target_label, attribute, impurity_metric=entropy):
     return to_return
 
 
-def fast_information_gain_on_entropy(data, target_label, attribute):
+def fast_information_gain_on_entropy(
+    data: "dataframe", target_label: str, attribute: str
+) -> float:
     """
     Calculates the information gain of the given attribute with respect to the target_label in the given dataframe
     Does this a bit quicker than the above method as it only uses entropy
@@ -77,7 +83,7 @@ def fast_information_gain_on_entropy(data, target_label, attribute):
     :param target_label: A name of a column in the dataframe 
     :param attribute:  A name of a column in the dataframe 
 
-    :returns: double, the information gain of the attribute
+    :returns: the information gain of the attribute
     """
     to_return = 0
     value_probs = [count / data.shape[0] for count in data[target_label].value_counts()]
@@ -99,9 +105,73 @@ def fast_information_gain_on_entropy(data, target_label, attribute):
     return to_return
 
 
+class DecisionTree(Model):
+    """
+    This class acts as a single node in a Decison Tree. 
+    It holds:
+        - attribute: The attribute this node acts on
+        - is_leaf: a flag for if this is a leaf node
+        - label: if this node is a leaf, this will contain the target label value predicted
+        - gain: the gain calculated by ID3 when creating this node 
+    """
+
+    def __init__(
+        self,
+        attribute: str = None,
+        is_leaf: bool = False,
+        label: str = None,
+        gain: float = None,
+    ):
+        """
+        Create a new Decision Tree
+        """
+        self.is_leaf = is_leaf
+        self.label = label
+        self.attribute = attribute
+        self.branches = {}
+        self.gain = gain
+
+    def add_branch(self, label: str, decision_tree: "DecisionTree"):
+        """
+        Adds a new branch to this node's children
+
+        :param label: the value of this node's attribute that this child should be called on
+        :param decison_tree: a decison tree to add as a child
+        """
+        self.branches[label] = decision_tree
+
+    def traverse(self, values: "dataframe") -> str:
+        """
+        Probes this decision tree, and it's children recursively for the target_label
+        Predicted by the given values
+        
+        :param values: A dictionary of the examples attributes
+
+        :returns: The predicted target label for this set of values
+        """
+        if self.is_leaf or values[self.attribute] not in self.branches:
+            return self.label
+
+        return self.branches[values[self.attribute]].traverse(values)
+
+    def find_max_depth(self) -> int:
+        """
+        A helper method that find the depth of this tree from its childre
+
+        :returns: The depth as an int
+        """
+        if len(self.branches) == 0:
+            return 0
+
+        return max(branch.find_max_depth() for branch in self.branches.values()) + 1
+
+
 def ID3(
-    examples, target_label, metric=fast_information_gain_on_entropy, depth_budget=None
-):
+    examples: "dataframe",
+    target_label: str,
+    metric: "function" = fast_information_gain_on_entropy,
+    depth_budget: int = None,
+) -> DecisionTree:
     """
     This function implements the ID3 algorithm
     It will return a DecisionTree constructed for the target_label using the givne dataframe of examples
@@ -153,59 +223,3 @@ def ID3(
             )
 
     return to_return
-
-
-class DecisionTree:
-    """
-    This class acts as a single node in a Decison Tree. 
-    It holds:
-        - attribute: The attribute this node acts on
-        - is_leaf: a flag for if this is a leaf node
-        - label: if this node is a leaf, this will contain the target label value predicted
-        - gain: the gain calculated by ID3 when creating this node 
-    """
-
-    def __init__(self, attribute=None, is_leaf=False, label=None, gain=None):
-        """
-        Create a new Decision Tree
-        """
-        self.is_leaf = is_leaf
-        self.label = label
-        self.attribute = attribute
-        self.branches = {}
-        self.gain = gain
-
-    def add_branch(self, label, decision_tree):
-        """
-        Adds a new branch to this node's children
-
-        :param label: the value of this node's attribute that this child should be called on
-        :param decison_tree: a decison tree to add as a child
-        """
-        self.branches[label] = decision_tree
-
-    def traverse(self, values):
-        """
-        Probes this decision tree, and it's children recursively for the target_label
-        Predicted by the given values
-        
-        :param values: A dictionary of the examples attributes
-
-        :returns: The predicted target label for this set of values
-        """
-        if self.is_leaf or values[self.attribute] not in self.branches:
-            return self.label
-
-        return self.branches[values[self.attribute]].traverse(values)
-
-    def find_max_depth(self):
-        """
-        A helper method that find the depth of this tree from its childre
-
-        :returns: The depth as an int
-        """
-        if len(self.branches) == 0:
-            return 0
-
-        return max(branch.find_max_depth() for branch in self.branches.values()) + 1
-

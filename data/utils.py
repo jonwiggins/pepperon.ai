@@ -16,7 +16,13 @@ import itertools
 import random
 
 
-def jackknife(data, fold_count, save, save_dir, experiment_id=""):
+def jackknife(
+    data: "dataframe",
+    fold_count: int,
+    save: bool,
+    save_dir: str,
+    experiment_id: str = "",
+) -> "List[dataframe]":
     """
     Jackknifes the given dataframe into fold_count number of dataframes
     
@@ -42,13 +48,13 @@ def jackknife(data, fold_count, save, save_dir, experiment_id=""):
     return folds
 
 
-def random_unit_vector(dimensions, seed=None):
+def random_unit_vector(dimensions: int, seed: int = None) -> "List[float]":
     """
     Returns a random unit vector in the given number of dimensions
     Created using Gausian Random vars
 
     :param dimensions: desired dimensions
-    :param seed: nullable, random var see
+    :param seed: nullable, random var seed
 
     :return: random unit vecotor
     """
@@ -56,19 +62,24 @@ def random_unit_vector(dimensions, seed=None):
     magnitude = 0
     if seed:
         random.seed(seed)
-        
+
     for count in range(dimensions):
         uniform1 = random.uniform(0, 1)
         uniform2 = random.uniform(0, 1)
         toadd = math.sqrt(-2 * math.log(uniform1)) * math.cos(2 * math.pi * uniform2)
-        magnitude += (toadd ** 2)
+        magnitude += toadd ** 2
         raw.append(toadd)
-    
+
     magnitude = math.sqrt(magnitude)
     return [element / magnitude for element in raw]
 
 
-def test_model_accuracy(model, probe_method, test_set, test_answer):
+def test_model_accuracy(
+    model: "Model",
+    probe_method: "function",
+    test_set: "dataframe",
+    test_answer: "List[object]",
+) -> float:
     """
     Tests the model on the given set and returns the accuracy
 
@@ -87,7 +98,12 @@ def test_model_accuracy(model, probe_method, test_set, test_answer):
     return correct_count / len(test_set)
 
 
-def test_model_error(model, probe_method, test_set, test_answer):
+def test_model_error(
+    model: "Model",
+    probe_method: "function",
+    test_set: "dataframe",
+    test_answer: "List[object]",
+) -> float:
     """
     Tests the model on the given set and returns the error
 
@@ -101,7 +117,9 @@ def test_model_error(model, probe_method, test_set, test_answer):
     return 1 - test_model_accuracy(model, probe_method, test_set, test_answer)
 
 
-def get_average_accuracy_and_sd(model, probe_method, folds):
+def get_average_accuracy_and_sd(
+    model: "Model", probe_method: "function", folds: "dataframe"
+) -> "Tuple(float, float)":
     """
     *incomplete*
     
@@ -127,7 +145,7 @@ def get_average_accuracy_and_sd(model, probe_method, folds):
     return np.mean(accs, axis=0), np.std(accs, axis=0)
 
 
-def enumerate_hyperparameter_combinations(parameter_to_options):
+def enumerate_hyperparameter_combinations(parameter_to_options: dict) -> "List[dict]":
     """
     Returns a list of dictionaries of all hyperparameter options
 
@@ -140,16 +158,16 @@ def enumerate_hyperparameter_combinations(parameter_to_options):
 
 
 def grid_search(
-    model_type,
-    probe_method,
-    parameter_to_options,
-    train_set,
-    train_answers,
-    test_set,
-    test_answers,
-    fold_count,
-    print_results,
-):
+    model_type: "Model",
+    probe_method: "function",
+    parameter_to_options: dict,
+    train_set: "dataframe",
+    train_answers: "List[object]",
+    test_set: "dataframe",
+    test_answers: "List[object]",
+    fold_count: int,
+    print_results: bool,
+) -> "Tuple[Model, dict, float, float]":
     """
     *incomplete*
     
@@ -190,4 +208,3 @@ def grid_search(
             best_std = sd
 
     return best_model, best_params, best_acc, best_std
-

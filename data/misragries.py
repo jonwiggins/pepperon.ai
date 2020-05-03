@@ -14,7 +14,7 @@ class MisraGries:
     This class holds a Mirsa-Gries cache
     """
 
-    def __init__(self, cache_size, warmed_cache={}):
+    def __init__(self, cache_size: int, warmed_cache: dict = {}):
         """
         Create a new cache
 
@@ -25,7 +25,7 @@ class MisraGries:
         self.cache_size = cache_size
         self.count = 0
 
-    def stream_multiple(self, input):
+    def stream_multiple(self, input: "List[object]"):
         """
         Inputs an iteratable to the cache
         
@@ -34,7 +34,7 @@ class MisraGries:
         for element in input:
             self.stream_input(element)
 
-    def stream_input(self, input):
+    def stream_input(self, input: object):
         """
         Inputs a single element to the cache
 
@@ -59,7 +59,7 @@ class MisraGries:
         """
         return self.cache
 
-    def probe(self, element):
+    def probe(self, element: object) -> int:
         """
         Probes the cache for the given element
 
@@ -72,11 +72,10 @@ class MisraGries:
         else:
             return 0
 
-    def get_count(self):
+    def get_count(self) -> int:
         """
         Gets the count of the total ammount of things seen by the cache
 
         :return: the total count of elements streamed
         """
         return self.count
-

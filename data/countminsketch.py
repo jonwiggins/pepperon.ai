@@ -16,7 +16,9 @@ class CountMinSketch:
     This class holds a count-sketch cache
     """
 
-    def __init__(self, function_count, cache_length, warmend_cache=None):
+    def __init__(
+        self, function_count: int, cache_length: int, warmend_cache: dict = None
+    ):
         """
         Create a new cache
 
@@ -30,7 +32,7 @@ class CountMinSketch:
         self.cache_length = cache_length
         self.count = 0
 
-    def stream_input(self, element):
+    def stream_input(self, element: object):
         """
         Inputs a single element to the cache
 
@@ -51,7 +53,7 @@ class CountMinSketch:
         """
         return self.cache
 
-    def probe(self, element):
+    def probe(self, element: object) -> int:
         """
         Probes the cache for the given element
 
@@ -67,7 +69,7 @@ class CountMinSketch:
             ]
         )
 
-    def get_count(self):
+    def get_count(self) -> int:
         """
         Gets the count of the total ammount of things seen by the cache
 

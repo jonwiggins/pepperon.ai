@@ -7,8 +7,9 @@ __author__ = "Jon Wiggins"
 import pandas as pd
 import numpy as np
 
+from model import *
 
-def sign(number):
+def sign(number: int) -> int:
     """ Maps the sign of the number to -1 or 1"""
     if number < 0:
         return -1
@@ -16,7 +17,7 @@ def sign(number):
         return 1
 
 
-class SVM:
+class SVM(Model):
     """
     SVM Via SGD
     """
@@ -29,12 +30,12 @@ class SVM:
 
     def train(
         self,
-        examples,
-        target_labels,
-        initial_learning_rate=0.1,
-        loss_tradeoff=0,
-        epochs=1,
-        rate_decay=True,
+        examples: "dataframe",
+        target_labels: "List[float]",
+        initial_learning_rate: float = 0.1,
+        loss_tradeoff: float = 0,
+        epochs: int = 1,
+        rate_decay: bool = True,
     ):
         """
         Trains a SVM on examples
@@ -74,7 +75,7 @@ class SVM:
                     self.weight = (1 - learning_rate) * self.weight
             self.epoch_saves.append((self.weight, self.bias))
 
-    def probe(self, x, epoch=None):
+    def probe(self, x: "List[float]", epoch: int = None) -> int:
         """
         Probes the model for a guess on the given input
 
@@ -87,4 +88,3 @@ class SVM:
             )
         else:
             return sign(self.weight.T.dot(x) + self.bias)
-

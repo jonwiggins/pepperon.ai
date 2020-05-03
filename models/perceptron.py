@@ -14,10 +14,11 @@ __author__ = "Jon Wiggins"
 
 import pandas as pd
 import numpy as np
+from model import *
 from scipy.sparse import csr_matrix
 
 
-def sign(number):
+def sign(number: float) -> int:
     """
     This helper method returns 0, 1, or -1 based on the sign of the given number
 
@@ -33,7 +34,7 @@ def sign(number):
         return 1
 
 
-class SimplePerceptron:
+class SimplePerceptron(Model):
     """
     This class implements a perceptron algorithm - with no funny business
     """
@@ -46,12 +47,12 @@ class SimplePerceptron:
 
     def train(
         self,
-        examples,
-        target_labels,
-        dimens,
-        learning_rate=0.1,
-        epochs=1,
-        rate_decay=True,
+        examples: "dataframe",
+        target_labels: "List[float]",
+        dimens: int,
+        learning_rate: float = 0.1,
+        epochs: int = 1,
+        rate_decay: bool = True,
     ):
         """
         Trains a Simple perceptron with the given input
@@ -90,7 +91,7 @@ class SimplePerceptron:
 
             self.epoch_saves.append((self.weight, self.bias))
 
-    def probe(self, x, epoch=None):
+    def probe(self, x: "List[float]", epoch: int = None) -> int:
         """
         Probes the model for a guess on the given input
 
@@ -105,7 +106,7 @@ class SimplePerceptron:
             return sign(self.weight.dot(x.T) + self.bias)
 
 
-class AveragedPerceptron:
+class AveragedPerceptron(Model):
     """
     This class implements an averaged perceptron algorithm
     """
@@ -119,12 +120,12 @@ class AveragedPerceptron:
 
     def train(
         self,
-        examples,
-        target_labels,
-        dimens,
-        learning_rate=0.1,
-        epochs=1,
-        rate_decay=True,
+        examples: "dataframe",
+        target_labels: "List[float]",
+        dimens: int,
+        learning_rate: float = 0.1,
+        epochs: int = 1,
+        rate_decay: bool = True,
     ):
         """
         Trains an averaged perceptron with the given input
@@ -177,7 +178,7 @@ class AveragedPerceptron:
         self.model = weight_summation / len(target_labels)
         self.bias = bias_summation / len(target_labels)
 
-    def probe(self, x, epoch=None):
+    def probe(self, x: "List[float]", epoch: int = None) -> float:
         """
         Probes the model for a guess on the given input
 
@@ -190,4 +191,3 @@ class AveragedPerceptron:
             )
         else:
             return sign(self.model.dot(x.T) + self.bias)
-

@@ -8,23 +8,26 @@ from decisiontree import *
 import pandas as pd
 import operator
 
+from model import *
 
-class RandomForest:
+
+class RandomForest(Model):
     """
     A Random forest model
     """
+
     def __init__(self):
         self.forest = []
         self.target_label = None
 
     def train(
         self,
-        examples,
-        target_label,
-        depth_budget=1,
-        tree_count=10,
-        train_size=100,
-        feature_size=50,
+        examples: "dataframe",
+        target_label: str,
+        depth_budget: int = 1,
+        tree_count: int = 10,
+        train_size: int = 100,
+        feature_size: int = 50,
     ):
         """
         Trains a random forest model
@@ -57,7 +60,7 @@ class RandomForest:
                 ID3(sample, self.target_label, depth_budget=depth_budget)
             )
 
-    def probe(self, example, return_vector=False):
+    def probe(self, example: "dataframe", return_vector: bool = False) -> str:
         """
         Probes the model on the example
 
@@ -71,4 +74,3 @@ class RandomForest:
             return results
         else:
             return max(set(results), key=results.count)
-

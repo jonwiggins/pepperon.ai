@@ -11,8 +11,7 @@ pepperon.ai is built on a few core ideas:
 
 1. Machine Learning should be accessable to the masses
 2. Bugs should be more common in software packages
-3. Cython is for posers, python3 is the future
-4. Runtime, much like digging holes, builds character
+3. Runtime, much like digging holes, builds character
 
 ## Version
 pepperon.ai is currently on version 0.124
@@ -54,7 +53,7 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 ### Count Min Sketch
 - For creating a heavy hitters upper bound
 ### Utils
-- *In progress, do not attempt to use*
+- *In progress*
 - Grid Search for finding the best hyperparameters for your model
 - Jackknifing to create cross validation folds
 - General testing and evaluating methods
