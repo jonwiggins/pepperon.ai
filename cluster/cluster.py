@@ -10,7 +10,7 @@ import math
 import random
 
 
-def euclidian_distance(first, second):
+def euclidian_distance(first: "List[float]", second: "List[float]") -> float:
     """
     Given two vectors, returns the euclidian distance between them
     Requires that they are the same dimension
@@ -18,14 +18,14 @@ def euclidian_distance(first, second):
     :param first: a vector
     :param second: a vector
 
-    :return: the distance as a double
+    :return: the distance as a float
     """
     if len(first) != len(second):
         raise Exception("These vectors must be the same size")
     return math.sqrt(sum([pow(x - y, 2) for x, y in zip(first, second)]))
 
 
-def manhatten_distance(first, second):
+def manhatten_distance(first: "List[float]", second: "List[float]") -> float:
     """
     Given two vectors, returns the manhatten distance between them
     Requires that they are the same dimension
@@ -33,7 +33,7 @@ def manhatten_distance(first, second):
     :param first: a vector
     :param second: a vector
 
-    :return: the distance as a double
+    :return: the distance as a float
     """
     if len(first) != len(second):
         raise Exception("These vectors must be the same size")
@@ -41,7 +41,7 @@ def manhatten_distance(first, second):
     return sum([abs(x - y) for x, y in zip(first, second)])
 
 
-def cosine_similarity(first, second):
+def cosine_similarity(first: "List[float]", second: "List[float]") -> float:
     """
     Given two vectors, returns the cosine similarity between them
     Requires that they are the same dimension
@@ -49,30 +49,36 @@ def cosine_similarity(first, second):
     :param first: a vector
     :param second: a vector
 
-    :return: the similarity as a double
+    :return: the similarity as a float
     """
     if len(first) != len(second):
         raise Exception("These vectors must be the same size")
     numerator = sum(x * y for x, y in zip(first, second))
-    denominator = math.sqrt(sum(pow(x, 2) for x in first)) * math.sqrt(sum(pow(y, 2) for y in second))
+    denominator = math.sqrt(sum(pow(x, 2) for x in first)) * math.sqrt(
+        sum(pow(y, 2) for y in second)
+    )
     if denominator == 0:
         return 0
     return numerator / denominator
 
-    
-def jaccard_similarity(first, second):
+
+def jaccard_similarity(first: "List[object]", second: "List[object]") -> float:
     """
     Given two sets, returns the jaccard similarity between them
 
     :param first: a set
     :param second: a set
 
-    :return: the similarity as a double
+    :return: the similarity as a float
     """
     return len(first & second) / len(first | second)
 
 
-def fowlkesmallowsindex(first_clustering, second_clustering, all_data_points):
+def fowlkesmallowsindex(
+    first_clustering: "Set[object]",
+    second_clustering: "Set[object]",
+    all_data_points: "Set[object]",
+) -> float:
     """
     Given two clusterings and a list of all the points, calculates the Fowlkes-Mallows Index
 
@@ -80,7 +86,7 @@ def fowlkesmallowsindex(first_clustering, second_clustering, all_data_points):
     :param second_clustering: the second set of iterables to compare
     :param all_data_points: all of the datapoints in the two clusterings as an iterable
 
-    :return: the Fowlkes Mallows Index as a double
+    :return: the Fowlkes Mallows Index as a float
     """
 
     # TP = the number of points that are present in the same cluster in both clusterings
@@ -142,14 +148,14 @@ def fowlkesmallowsindex(first_clustering, second_clustering, all_data_points):
     return math.sqrt((TP / (TP + FP))) * (TP / (TP + FN))
 
 
-def purity(first_clustering, second_clustering):
+def purity(first_clustering: "Set[object]", second_clustering: "Set[object]") -> float:
     """
     Returns the purity of the given two clusterings
 
     :param first_clusterings: a set of iterables to compare
     :param second_clusterings: a set of iterables to compare
 
-    :return: the purity index as a double
+    :return: the purity index as a float
     """
     summation = 0
 
@@ -171,7 +177,9 @@ def purity(first_clustering, second_clustering):
     return summation / N
 
 
-def get_nearest_center(element, centers, distance_function):
+def get_nearest_center(
+    element: object, centers: "Set[object]", distance_function: "function"
+) -> object:
     """
     Get the center that is nearest to the given point
     
@@ -194,7 +202,9 @@ def get_nearest_center(element, centers, distance_function):
     return closest_center
 
 
-def get_distance_to_center(element, centers, distance_function):
+def get_distance_to_center(
+    element: object, centers: "Set[object]", distance_function: "function"
+) -> float:
     """
     Returns  the distance from the given point to its center
 
@@ -209,7 +219,11 @@ def get_distance_to_center(element, centers, distance_function):
     )
 
 
-def kmeans_pp(points, center_count, distance_function=euclidian_distance):
+def kmeans_pp(
+    points: "List[object]",
+    center_count: int,
+    distance_function: "function" = euclidian_distance,
+) -> dict:
     """
     Clusters based on the kmeans++ algorithm
 
@@ -258,7 +272,11 @@ def kmeans_pp(points, center_count, distance_function=euclidian_distance):
     return to_return
 
 
-def gonzales(points, center_count, distance_function=euclidian_distance):
+def gonzales(
+    points: "List[object]",
+    center_count: int,
+    distance_function: "function" = euclidian_distance,
+) -> dict:
     """
     Clusters the given points based on the Greedy Gonzales algorithmn
 
@@ -296,9 +314,80 @@ def gonzales(points, center_count, distance_function=euclidian_distance):
     return to_return
 
 
+def single_link(
+    first_clustering: "Set[object]",
+    second_clustering: "Set[object]",
+    distance_function: "function",
+) -> float:
+    """
+    Finds the smallest distance between any two points in the two given clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the smallest distance between a pair of points in the two clusters
+    """
+    min_neighbor_distance = None
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            current_distance = distance_function(first_neighbor, second_neighbor)
+            if not min_neighbor_distance or min_neighbor_distance > current_distance:
+                min_neighbor_distance = current_distance
+    return min_neighbor_distance
+
+
+def mean_link(
+    first_clustering: "Set[object]",
+    second_clustering: "Set[object]",
+    distance_function: "function",
+) -> float:
+    """
+    Finds the average distance between each pair of points in the two clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the average distance between each pair of points in the two clusters
+    """
+    total_distance = 0.0
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            total_distance += distance_function(first_neighbor, second_neighbor)
+
+    return total_distance / (len(first_clustering) * len(second_clustering))
+
+
+def complete_link(
+    first_clustering: "Set[object]",
+    second_clustering: "Set[object]",
+    distance_function: "function",
+) -> float:
+    """
+    Finds the largest distance between any two points in the two given clusters
+
+    :param first_clustering: a set of points
+    :param second_clustering: a set of points
+    :param distance_function: a function that compares two points
+
+    :return: the largest distance between a pair of points in the two clusters
+    """
+    max_neighbor_distance = None
+    for first_neighbor in first_clustering:
+        for second_neighbor in second_clustering:
+            current_distance = distance_function(first_neighbor, second_neighbor)
+            if not max_neighbor_distance or max_neighbor_distance < current_distance:
+                max_neighbor_distance = current_distance
+    return max_neighbor_distance
+
+
 def heirarchial_cluster(
-    points, center_count, distance_function=euclidian_distance, link=mean_link
-):
+    points: "List[object]",
+    center_count: int,
+    distance_function: "function" = euclidian_distance,
+    link: "function" = mean_link,
+) -> dict:
     """
     Clusters the given points based on heirarchial clustering: the distance between two clusters is calculated using the given link function
 
@@ -333,60 +422,3 @@ def heirarchial_cluster(
         del clusters[second_neighbor_index]
 
     return clusters
-
-
-def single_link(first_clustering, second_clustering, distance_function):
-    """
-    Finds the smallest distance between any two points in the two given clusters
-
-    :param first_clustering: a set of points
-    :param second_clustering: a set of points
-    :param distance_function: a function that compares two points
-
-    :return: the smallest distance between a pair of points in the two clusters
-    """
-    min_neighbor_distance = None
-    for first_neighbor in first_clustering:
-        for second_neighbor in second_clustering:
-            current_distance = distance_function(first_neighbor, second_neighbor)
-            if not min_neighbor_distance or min_neighbor_distance > current_distance:
-                min_neighbor_distance = current_distance
-    return min_neighbor_distance
-
-
-def mean_link(first_clustering, second_clustering, distance_function):
-    """
-    Finds the average distance between each pair of points in the two clusters
-
-    :param first_clustering: a set of points
-    :param second_clustering: a set of points
-    :param distance_function: a function that compares two points
-
-    :return: the average distance between each pair of points in the two clusters
-    """
-    total_distance = 0.0
-    for first_neighbor in first_clustering:
-        for second_neighbor in second_clustering:
-            total_distance += distance_function(first_neighbor, second_neighbor)
-
-    return total_distance / (len(first_clustering) * len(second_clustering))
-
-
-def complete_link(first_clustering, second_clustering, distance_function):
-    """
-    Finds the largest distance between any two points in the two given clusters
-
-    :param first_clustering: a set of points
-    :param second_clustering: a set of points
-    :param distance_function: a function that compares two points
-
-    :return: the largest distance between a pair of points in the two clusters
-    """
-    max_neighbor_distance = None
-    for first_neighbor in first_clustering:
-        for second_neighbor in second_clustering:
-            current_distance = distance_function(first_neighbor, second_neighbor)
-            if not max_neighbor_distance or max_neighbor_distance < current_distance:
-                max_neighbor_distance = current_distance
-    return max_neighbor_distance
-

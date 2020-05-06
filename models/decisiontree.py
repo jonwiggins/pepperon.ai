@@ -51,7 +51,10 @@ def gini_index(data: "dataframe", target_label: str) -> float:
 
 
 def information_gain(
-    data: "dataframe", target_label: str, attribute: str, impurity_metric: str = entropy
+    data: "dataframe",
+    target_label: str,
+    attribute: str,
+    impurity_metric: "function" = entropy,
 ) -> float:
     """
     Calculates the information gain of the given attribute with respect to the target_label in the given dataframe
