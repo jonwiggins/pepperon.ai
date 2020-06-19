@@ -62,7 +62,7 @@ def cosine_similarity(first: "List[float]", second: "List[float]") -> float:
     return numerator / denominator
 
 
-def jaccard_similarity(first: "List[object]", second: "List[object]") -> float:
+def jaccard_similarity(first: "Set[object]", second: "Set[object]") -> float:
     """
     Given two sets, returns the jaccard similarity between them
 
