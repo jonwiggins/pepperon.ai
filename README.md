@@ -54,6 +54,9 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 - For creating a heavy hitters upper bound
 ### Utils
 - *In progress*
+- Fowlkes-Mallows Index ; for comparing clusterings;
+- Purity Index ; for comparing clusterings
+- Various distance and similarity functions
 - Grid Search for finding the best hyperparameters for your model
 - Jackknifing to create cross validation folds
 - General testing and evaluating methods
@@ -67,10 +70,6 @@ Rather than basing off of clusters, Heirarchial methods iteratively merge the tw
 - Single link: finds the smallest distance between two points in clusters
 - Complete link: find the largest distance between two points in clusters
 - Mean link: finds the average distance between two points in clusters
-### Utils
-- Fowlkes-Mallows Index ; for comparing clusterings;
-- Purity Index ; for comparing clusterings
-- Various distance and similarity functions
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems

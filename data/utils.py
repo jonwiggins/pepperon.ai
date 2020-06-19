@@ -16,6 +16,173 @@ import itertools
 import random
 
 
+def euclidian_distance(first: "List[float]", second: "List[float]") -> float:
+    """
+    Given two vectors, returns the euclidian distance between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+
+    :return: the distance as a float
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+    return math.sqrt(sum([pow(x - y, 2) for x, y in zip(first, second)]))
+
+
+def manhatten_distance(first: "List[float]", second: "List[float]") -> float:
+    """
+    Given two vectors, returns the manhatten distance between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+
+    :return: the distance as a float
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+
+    return sum([abs(x - y) for x, y in zip(first, second)])
+
+
+def cosine_similarity(first: "List[float]", second: "List[float]") -> float:
+    """
+    Given two vectors, returns the cosine similarity between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+
+    :return: the similarity as a float
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+    numerator = sum(x * y for x, y in zip(first, second))
+    denominator = math.sqrt(sum(pow(x, 2) for x in first)) * math.sqrt(
+        sum(pow(y, 2) for y in second)
+    )
+    if denominator == 0:
+        return 0
+    return numerator / denominator
+
+
+def jaccard_similarity(first: "Set[object]", second: "Set[object]") -> float:
+    """
+    Given two sets, returns the jaccard similarity between them
+
+    :param first: a set
+    :param second: a set
+
+    :return: the similarity as a float
+    """
+    return len(first & second) / len(first | second)
+
+
+def fowlkesmallowsindex(
+    first_clustering: "Set[object]",
+    second_clustering: "Set[object]",
+    all_data_points: "Set[object]",
+) -> float:
+    """
+    Given two clusterings and a list of all the points, calculates the Fowlkes-Mallows Index
+
+    :param first_clustering: the first set of iterables to compare
+    :param second_clustering: the second set of iterables to compare
+    :param all_data_points: all of the datapoints in the two clusterings as an iterable
+
+    :return: the Fowlkes Mallows Index as a float
+    """
+
+    # TP = the number of points that are present in the same cluster in both clusterings
+    # FP = the number of points that are present in the same cluster in clustering1 but not clustering2
+    # FN = the number of points that are present in the same cluster in clustering2 but not clustering1
+    # TN = the number of points that are in different clusters in both clusterings
+    TP = 0
+    FP = 0
+    FN = 0
+    TN = 0
+
+    for element in all_data_points:
+        elements_first_location = None
+        for cluster in first_clustering:
+            if element in cluster:
+                elements_first_location = cluster
+                break
+
+        elements_second_location = None
+        for cluster in second_clustering:
+            if element in cluster:
+                elements_second_location = cluster
+                break
+
+        for comparison_element in all_data_points:
+            comparisons_first_cluster = None
+            for cluster in first_clustering:
+                if comparison_element in cluster:
+                    comparisons_first_cluster = cluster
+            comparisons_second_cluster = None
+            for cluster in second_clustering:
+                if comparison_element in cluster:
+                    comparisons_second_cluster = cluster
+
+            if (
+                elements_first_location == comparisons_first_cluster
+                and elements_second_location == comparisons_second_cluster
+            ):
+                TP += 1
+            elif (
+                elements_first_location == comparisons_first_cluster
+                and not elements_second_location == comparisons_second_cluster
+            ):
+                FP += 1
+            elif (
+                not elements_first_location == comparisons_first_cluster
+                and elements_second_location == comparisons_second_cluster
+            ):
+                FN += 1
+            elif (
+                not elements_first_location == comparisons_first_cluster
+                and not elements_second_location == comparisons_second_cluster
+            ):
+                TN += 1
+
+    if TP + FP == 0 or TP + FN == 0:
+        return 0
+
+    return math.sqrt((TP / (TP + FP))) * (TP / (TP + FN))
+
+
+def purity(first_clustering: "Set[object]", second_clustering: "Set[object]") -> float:
+    """
+    Returns the purity of the given two clusterings
+
+    :param first_clusterings: a set of iterables to compare
+    :param second_clusterings: a set of iterables to compare
+
+    :return: the purity index as a float
+    """
+    summation = 0
+
+    for cluster in first_clustering:
+        highest = 0
+        for comparer in second_clustering:
+            next_element = len(cluster.intersection(comparer))
+            if next_element > highest:
+                highest = next_element
+
+        summation += highest
+
+    # find total number of data points
+    N = sum(len(cluster) for cluster in first_clustering)
+
+    if N == 0:
+        return 0
+
+    return summation / N
+
+
 def jackknife(
     data: "dataframe",
     fold_count: int,
