@@ -30,7 +30,7 @@ pepperon.ai requires:
 There is no `pip` or `conda` install, just yoink the file you want from this repo and paste it into your project.
 
 # Modules
-## Models
+## Supervised Learning
 ### Decision Trees
 - Decision Trees created with ID3 ; for all your decison needs
 ### Perceptron
@@ -57,7 +57,7 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 - Grid Search for finding the best hyperparameters for your model
 - Jackknifing to create cross validation folds
 - General testing and evaluating methods
-## Cluster
+## Unsupervised Learning
 ### kmeans++
 Clusters based on the kmeans++ algorithm, all based on probability
 ### Gonzales
