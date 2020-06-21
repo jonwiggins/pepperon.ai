@@ -31,6 +31,26 @@ def euclidian_distance(first: "List[float]", second: "List[float]") -> float:
     return math.sqrt(sum([pow(x - y, 2) for x, y in zip(first, second)]))
 
 
+def minkowski_distance(
+    first: "List[float]", second: "List[float]", order: int
+) -> float:
+    """
+    Given two vectors, returns the Minkowski distance between them
+    Requires that they are the same dimension
+
+    :param first: a vector
+    :param second: a vector
+    :param order: int
+
+    :return: the distance as a float
+    """
+    if len(first) != len(second):
+        raise Exception("These vectors must be the same size")
+    return pow(
+        sum([pow(np.abs(x - y), order) for x, y in zip(first, second)]), 1 / order
+    )
+
+
 def manhatten_distance(first: "List[float]", second: "List[float]") -> float:
     """
     Given two vectors, returns the manhatten distance between them

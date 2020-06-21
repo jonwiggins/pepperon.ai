@@ -10,3 +10,9 @@ __author__ = "Jon Wiggins"
 class Model:
     def __init__(self):
         pass
+
+    def train(self):
+        pass
+
+    def probe(self):
+        pass
