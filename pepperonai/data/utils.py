@@ -261,7 +261,7 @@ def random_unit_vector(dimensions: int, seed: int = None) -> "List[float]":
     return [element / magnitude for element in raw]
 
 
-def test_model_accuracy(
+def model_accuracy(
     model: "Model",
     probe_method: "function",
     test_set: "dataframe",
@@ -285,7 +285,7 @@ def test_model_accuracy(
     return correct_count / len(test_set)
 
 
-def test_model_error(
+def model_error(
     model: "Model",
     probe_method: "function",
     test_set: "dataframe",
@@ -301,7 +301,7 @@ def test_model_error(
 
     :return: 1- the number of correct predicitons / total number of probes
     """
-    return 1 - test_model_accuracy(model, probe_method, test_set, test_answer)
+    return 1 - model_accuracy(model, probe_method, test_set, test_answer)
 
 
 def get_average_accuracy_and_sd(
@@ -325,7 +325,7 @@ def get_average_accuracy_and_sd(
             train_set = train_set.append(element)
         # TODO generalize and train here
         accs.append(
-            test_model_accuracy(
+            model_accuracy(
                 model, probe_method, test_set=test_fold, test_answer=test_fold
             )
         )

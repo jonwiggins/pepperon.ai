@@ -13,7 +13,7 @@ __author__ = "Jon Wiggins"
 
 import math
 
-from model import *
+from model import Model
 
 
 def entropy(data: "dataframe", target_label: str) -> float:

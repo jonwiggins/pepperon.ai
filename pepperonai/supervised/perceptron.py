@@ -14,7 +14,7 @@ __author__ = "Jon Wiggins"
 
 import pandas as pd
 import numpy as np
-from model import *
+from model import Model
 from scipy.sparse import csr_matrix
 
 

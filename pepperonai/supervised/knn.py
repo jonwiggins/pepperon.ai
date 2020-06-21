@@ -6,7 +6,7 @@ __author__ = "Jon Wiggins"
 
 from collections import Counter
 import pandas as pd
-from model import *
+from model import Model
 import utils
 
 
