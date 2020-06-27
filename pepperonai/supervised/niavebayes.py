@@ -8,10 +8,8 @@ import numpy as np
 import math
 import collections
 
-from model import Model
 
-
-class NiaveBayes(Model):
+class NiaveBayes:
     def bernoulli_probability(
         self, attribute: str, subset_with_label: "dataframe", example: "dataframe"
     ) -> float:

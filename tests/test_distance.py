@@ -1,5 +1,5 @@
 import pytest
-from pepperonai.data.utils import *
+from pepperonai.unsupervised.distance import *
 
 
 def test_euclidean():

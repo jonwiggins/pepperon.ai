@@ -53,9 +53,7 @@ def get_distance_to_center(
 
 
 def kmeans_pp(
-    points: "List[object]",
-    center_count: int,
-    distance_function: "function" = euclidian_distance,
+    points: "List[object]", center_count: int, distance_function: "function",
 ) -> dict:
     """
     Clusters based on the kmeans++ algorithm
@@ -106,9 +104,7 @@ def kmeans_pp(
 
 
 def gonzales(
-    points: "List[object]",
-    center_count: int,
-    distance_function: "function" = euclidian_distance,
+    points: "List[object]", center_count: int, distance_function: "function",
 ) -> dict:
     """
     Clusters the given points based on the Greedy Gonzales algorithmn
@@ -218,7 +214,7 @@ def complete_link(
 def heirarchial_cluster(
     points: "List[object]",
     center_count: int,
-    distance_function: "function" = euclidian_distance,
+    distance_function: "function",
     link: "function" = mean_link,
 ) -> dict:
     """

@@ -13,8 +13,6 @@ __author__ = "Jon Wiggins"
 
 import math
 
-from model import Model
-
 
 def entropy(data: "dataframe", target_label: str) -> float:
     """
@@ -108,7 +106,7 @@ def fast_information_gain_on_entropy(
     return to_return
 
 
-class DecisionTree(Model):
+class DecisionTree:
     """
     This class acts as a single node in a Decison Tree. 
     It holds:

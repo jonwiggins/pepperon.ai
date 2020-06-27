@@ -7,8 +7,6 @@ __author__ = "Jon Wiggins"
 import pandas as pd
 import numpy as np
 
-from model import Model
-
 
 def sign(number: int) -> int:
     """ Maps the sign of the number to -1 or 1"""
@@ -18,7 +16,7 @@ def sign(number: int) -> int:
         return 1
 
 
-class SVM(Model):
+class SVM:
     """
     SVM Via SGD
     """

@@ -8,10 +8,8 @@ from decisiontree import *
 import pandas as pd
 import operator
 
-from model import Model
 
-
-class RandomForest(Model):
+class RandomForest:
     """
     A Random forest model
     """

@@ -14,7 +14,6 @@ __author__ = "Jon Wiggins"
 
 import pandas as pd
 import numpy as np
-from model import Model
 from scipy.sparse import csr_matrix
 
 
@@ -34,7 +33,7 @@ def sign(number: float) -> int:
         return 1
 
 
-class SimplePerceptron(Model):
+class SimplePerceptron:
     """
     This class implements a perceptron algorithm - with no funny business
     """
@@ -106,7 +105,7 @@ class SimplePerceptron(Model):
             return sign(self.weight.dot(x.T) + self.bias)
 
 
-class AveragedPerceptron(Model):
+class AveragedPerceptron:
     """
     This class implements an averaged perceptron algorithm
     """
