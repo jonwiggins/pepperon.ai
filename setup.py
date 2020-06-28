@@ -9,7 +9,7 @@ setup(
     author="Jon Wiggins",
     author_email="contact@pepperon.ai",
     url="https://github.com/JonWiggins/pepperon.ai",
-    download_url="https://github.com/JonWiggins/pepperon.ai/archive/v_0120.tar.gz",
+    download_url="https://github.com/JonWiggins/pepperon.ai/archive/0.12.0.tar.gz",
     keywords=["ML", "NLP", "AI", "pepperonai", "pepperon.ai"],
     install_requires=["pandas", "numpy", "scipy"],
     classifiers=[
