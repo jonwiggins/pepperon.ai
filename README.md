@@ -27,7 +27,9 @@ pepperon.ai requires:
 - Pandas (>= 0.24)
 
 ### User Installation
-There is no `pip` or `conda` install, just yoink the file you want from this repo and paste it into your project.
+You can install pepperonai from pypi via:
+
+`pip install pepperonai`
 
 # Modules
 ## Supervised Learning
