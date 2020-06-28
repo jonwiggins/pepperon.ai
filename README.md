@@ -14,7 +14,7 @@ pepperon.ai is built on a few core ideas:
 3. Runtime, much like digging holes, builds character
 
 ## Version
-pepperon.ai is currently on version 0.124
+pepperon.ai is currently on version 0.12.0
 
 ## Installation
 
@@ -42,6 +42,8 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 - Guassian and Bernoulli
 ### Random Forest
 - Random Forest on ID3
+### KNN
+- Labeling data based on it's nearest neighbors 
 ## Language
 ### Ngrams
 - ngrams ; for all your simplistic corpus needs 
@@ -56,7 +58,6 @@ There is no `pip` or `conda` install, just yoink the file you want from this rep
 - *In progress*
 - Fowlkes-Mallows Index ; for comparing clusterings;
 - Purity Index ; for comparing clusterings
-- Various distance and similarity functions
 - Grid Search for finding the best hyperparameters for your model
 - Jackknifing to create cross validation folds
 - General testing and evaluating methods
@@ -70,6 +71,7 @@ Rather than basing off of clusters, Heirarchial methods iteratively merge the tw
 - Single link: finds the smallest distance between two points in clusters
 - Complete link: find the largest distance between two points in clusters
 - Mean link: finds the average distance between two points in clusters
+- Various distance and similarity functions
 
 ## Usage Examples
 Maybe one day I will make some files that show off how to go about using these systems
