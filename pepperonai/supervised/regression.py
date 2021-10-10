@@ -12,9 +12,7 @@ class LinearRegression:
         self.fitted = False
         pass
 
-    def train(
-        self, X: np.array, y: np.array, lmbda=1: int
-    ):
+    def train(self, X: np.array, y: np.array, lmbda: int):
         """
         Fit a linear regression model
 
@@ -28,9 +26,11 @@ class LinearRegression:
         y_col = Y.reshape(-1, 1)
         # add column for coeffs
         matrix = np.hstack((np.ones((N, 1)), X))
-        const = N * lmbda * np.eye(d+1)
-        self.beta = np.linalg.pinv(matrix.T.dot(matrix) + const).dot(matrix.T).dot(Y_col)    
-        self.fitted = True    
+        const = N * lmbda * np.eye(d + 1)
+        self.beta = (
+            np.linalg.pinv(matrix.T.dot(matrix) + const).dot(matrix.T).dot(Y_col)
+        )
+        self.fitted = True
 
     def probe(self, X: np.array) -> np.array:
         """

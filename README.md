@@ -46,6 +46,8 @@ You can install pepperonai from pypi via:
 - Random Forest on ID3
 ### KNN
 - Labeling data based on it's nearest neighbors 
+### Linear Regression
+- For line based modeling
 ## Language
 ### Ngrams
 - ngrams ; for all your simplistic corpus needs 
