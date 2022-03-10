@@ -24,14 +24,11 @@ def get_nearest_center(
     """
     closest_distance = None
     closest_center = None
-
     for center in centers:
         current_distance = distance_function(element, center)
-
         if not closest_center or closest_distance > current_distance:
             closest_distance = current_distance
             closest_center = center
-
     return closest_center
 
 
@@ -48,7 +45,7 @@ def get_distance_to_center(
     :return: the distance from the element to its center
     """
     return distance_function(
-        element, get_nearest_center(centers, element, distance_function)
+        element, get_nearest_center(element, centers, distance_function)
     )
 
 
@@ -64,42 +61,31 @@ def kmeans_pp(
 
     :return: a dictionary that maps centers to the points in its cluster
     """
-
     # start with any arbitrary center
-    centers = set(points[0])
-
+    centers = set([points[0]])
     while len(centers) < center_count:
-
         decider_value = random.uniform(0.0, 1.0)
-
         distances_to_centers = [
-            pow(get_distance_to_center(element, centers, distance_function), 2)
+            get_distance_to_center(element, centers, distance_function)
             for element in points
         ]
-
         # normalize the distances
         total = sum(distances_to_centers)
         distances_to_centers = [element / total for element in distances_to_centers]
-
         counter = 0.0
-
         for index, element in enumerate(distances_to_centers):
-            counter += distances_to_centers
-
-            if counter >= decider_value:
+            counter += element
+            if decider_value <= counter:
                 centers.append(points[index])
                 break
-
     # make a dict that maps a center to the points in its cluster
     to_return = {}
-
     for center in centers:
         to_add = set()
         for index, element in points:
             if get_nearest_center(element, centers, distance_function) == center:
                 to_add.add(element)
         to_return[center] = to_add
-
     return to_return
 
 
@@ -129,17 +115,14 @@ def gonzales(
                 max_distance = lowest_distance_to_center
                 max_point = element
         centers.append(element)
-
     # make a dict that maps a center to the points in its cluster
     to_return = {}
-
     for center in centers:
         to_add = set()
         for index, element in points:
             if get_nearest_center(element, centers, distance_function) == center:
                 to_add.add(element)
         to_return[center] = to_add
-
     return to_return
 
 
